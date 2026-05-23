@@ -5,6 +5,10 @@ A lyrics visualizer for **Love Me Not by Ravyn Lenae**, built with HTML, CSS and
 ## 🔗 Live Demo
 👉 https://jocular-melomakarona-ef3d25.netlify.app/
 
+
+## 🔗 Live Demo
+👉 https://love-me-not-chi.vercel.app/
+
 ## Features
 - Dark code editor theme
 - Neon pink glowing lyrics
