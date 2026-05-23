@@ -249,13 +249,7 @@ document.getElementById("nextBtn").onclick = function () {
     if (current < total) seekToLine(current + 1);
 };
 document.getElementById("playBtn").onclick = function () {
-    if (audio.paused) {
-    audio.play();
-    this.textContent = "⏸ Pause";
-} else {
-    audio.pause();
-    this.textContent = "▶ Play";
-}
+   
     if (audio.paused) {
         audio.play();
         this.textContent = "⏸ Pause";
