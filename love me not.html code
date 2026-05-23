@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>love me not</title>
+    <style>
+        body {
+            background: #0d0a1a;
+            margin: 0;
+            padding: 20px;
+        }
+        .editor { background: #1e1e2e; }
+        .titlebar {
+            background: #181825;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red    { background: #f38ba8; }
+        .yellow { background: #f9e2af; }
+        .green  { background: #a6e3a1; }
+        .titlebar span {
+            color: #cdd6f4;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+        }
+        .line { display: flex; gap: 16px; padding: 4px 12px; }
+        .line-number { color: #45475a; font-family: 'Consolas', monospace; font-size: 13px; }
+        .lyric { color: #ff00aa; font-family: 'Consolas', monospace; font-size: 13px; }
+        .active { background: #2a2a3e; border-left: 3px solid #ff00aa; }
+        .active .lyric { color: #ff69b4; font-size: 15px; }
+        .audio-bar {
+            background: #181825;
+            padding: 10px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border-top: 1px solid #313244;
+        }
+        .audio-row { display: flex; align-items: center; gap: 10px; }
+        .upload-label {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #313244;
+            background: #1e1e2e;
+            color: #cdd6f4;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .upload-label:hover { background: #313244; }
+        #fileInput { display: none; }
+        #fileLabel {
+            color: #6c7086;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            flex: 1;
+        }
+        .seek-row { display: flex; align-items: center; gap: 8px; }
+        #seekBar { flex: 1; height: 4px; accent-color: #ff00aa; cursor: pointer; }
+        #timeDisplay {
+            color: #6c7086;
+            font-family: 'Consolas', monospace;
+            font-size: 11px;
+            min-width: 80px;
+            text-align: right;
+        }
+        .controls { display: flex; gap: 10px; padding: 12px 16px; background: #181825; }
+        button {
+            padding: 8px 18px;
+            border-radius: 6px;
+            border: 1px solid #313244;
+            background: #1e1e2e;
+            color: #cdd6f4;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        button:hover { background: #313244; }
+        #line-9, #line-10, #line-11, #line-12, #line-13,
+#line-14, #line-15, #line-16, #line-17, #line-18,
+#line-19, #line-20, #line-21 {
+    background: transparent !important;
+    border-left: none !important;
+}
+    </style>
+</head>
+<body>
+<div class="editor">
+    <div class="titlebar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <span>love_me_not.py</span>
+    </div>
+
+    <div class="code-area">
+        <div class="line" id="line-1"><span class="line-number">1</span><span class="lyric">("You gotta say that you're sorry at the end of the night")</span></div>
+        <div class="line" id="line-2"><span class="line-number">2</span><span class="lyric">("Wake up in the morning, everything's alright")</span></div>
+        <div class="line" id="line-3"><span class="line-number">3</span><span class="lyric">("At the end of the story, you're holdin' me tight")</span></div>
+        <div class="line" id="line-4"><span class="line-number">4</span><span class="lyric">('I don't need to worry, am I out of my mind?')</span></div>
+        <div class="line" id="line-5"><span class="line-number">5</span><span class="lyric">('And, oh, it's hard to see you, but I wish you were right here')</span></div>
+        <div class="line" id="line-6"><span class="line-number">6</span><span class="lyric">('Oh, it's hard to leave you when I get you everywhere')</span></div>
+        <div class="line" id="line-7"><span class="line-number">7</span><span class="lyric">('All this time I'm thinking, I'm strong enough to sink it')</span></div>
+        <div class="line" id="line-8"><span class="line-number">8</span><span class="lyric">('Oh, no, I don't need you, but I miss you, come here')</span></div>
+       <div class="line" id="line-9"><span class="line-number">9</span><span class="lyric">&nbsp;&nbsp;&nbsp;********&nbsp;&nbsp;&nbsp;*********</span></div>
+        <div class="line" id="line-10"><span class="line-number">10</span><span class="lyric">**********&nbsp;&nbsp;&nbsp;**********</span></div>
+        <div class="line" id="line-11"><span class="line-number">11</span><span class="lyric">**********************</span></div>
+        <div class="line" id="line-12"><span class="line-number">12</span><span class="lyric">&nbsp;********************</span></div>
+        <div class="line" id="line-13"><span class="line-number">13</span><span class="lyric">&nbsp;&nbsp;******************</span></div>
+        <div class="line" id="line-14"><span class="line-number">14</span><span class="lyric">&nbsp;&nbsp;&nbsp;****************</span></div>
+        <div class="line" id="line-15"><span class="line-number">15</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;**************</span></div>
+        <div class="line" id="line-16"><span class="line-number">16</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;************</span></div>
+        <div class="line" id="line-17"><span class="line-number">17</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**********</span></div>
+        <div class="line" id="line-18"><span class="line-number">18</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;********</span></div>
+        <div class="line" id="line-19"><span class="line-number">19</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;******</span></div>
+        <div class="line" id="line-20"><span class="line-number">20</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;****</span></div>
+        <div class="line" id="line-21"><span class="line-number">21</span><span class="lyric">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**</span></div>
+    </div>
+
+    <div class="audio-bar">
+        <div class="audio-row">
+            <label class="upload-label" for="fileInput">📂 Load song</label>
+            <input type="file" id="fileInput" accept="audio/*">
+            <label for="seekBar" style="display:none">Seek</label>
+            <span id="fileLabel">no file loaded</span>
+        </div>
+        <div class="seek-row">
+            <input type="range" id="seekBar" min="0" max="100" value="0" step="0.1">
+            <span id="timeDisplay">0:00 / 0:00</span>
+        </div>
+        <audio id="audio" src="love_me_not.mp3"></audio>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn">⏮ Prev</button>
+        <button id="playBtn">▶ Play</button>
+        <button id="nextBtn">Next ⏭</button>
+    </div>
+</div>
+
+<script>
+// ✏️ FILL IN YOUR TIMESTAMPS (in seconds)
+// formula: minutes x 60 + seconds
+// example: 2:49 = 169,  2:54 = 174
+const timestamps = [
+    169,  // line 1  — 2:49
+    174,  // line 2  — 2:54  ← replace with your real time
+    178,  // line 3  ← replace with your real time
+    182,  // line 4  ← replace with your real time
+    186,  // line 5  ← replace with your real time
+    190,  // line 6  ← replace with your real time
+    194,  // line 7  ← replace with your real time
+    198,  // line 8  ← replace with your real time
+    202,  // line 9  ← replace with your real time
+    202,  // line 10 ← replace with your real time
+    202,  // line 11 ← replace with your real time
+    202,  // line 12 ← replace with your real time
+    202,  // line 13 ← replace with your real time
+    202,  // line 14 ← replace with your real time
+    202,  // line 15 ← replace with your real time
+    202,  // line 16 ← replace with your real time
+    202,  // line 17 ← replace with your real time
+    202,  // line 18 ← replace with your real time
+    202,  // line 19 ← replace with your real time
+    202,  // line 20 ← replace with your real time
+    202,  // line 21 ← replace with your real time
+];
+
+const total = 21;
+let current = 1;
+const audio = document.getElementById("audio");
+const seekBar = document.getElementById("seekBar");
+const timeDisplay = document.getElementById("timeDisplay");
+
+function fmt(s) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, "0");
+    return `${m}:${sec}`;
+}
+
+function highlight(lineNumber) {
+    // remove active from all lines first
+    for (let i = 1; i <= total; i++) {
+        document.getElementById("line-" + i).classList.remove("active");
+    }
+
+    // if we reached the heart (line 9), highlight ALL heart lines together
+    if (lineNumber >= 9) {
+        for (let i = 9; i <= 21; i++) {
+            document.getElementById("line-" + i).classList.add("active");
+        }
+    } else {
+        // normal single line highlight
+        document.getElementById("line-" + lineNumber).classList.add("active");
+    }
+
+    current = lineNumber;
+}
+
+
+function seekToLine(n) {
+    if (audio.src) audio.currentTime = timestamps[n - 1];
+    highlight(n);
+}
+
+// ✨ AUTO SYNC — highlights the right line as song plays
+audio.addEventListener("timeupdate", () => {
+    if (!isNaN(audio.duration)) {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+        timeDisplay.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+
+        const t = audio.currentTime;
+        for (let i = timestamps.length - 1; i >= 0; i--) {
+            if (t >= timestamps[i]) {
+                if (current !== i + 1) highlight(i + 1);
+                break;
+            }
+        }
+    }
+});
+
+audio.addEventListener("loadedmetadata", () => {
+    timeDisplay.textContent = `0:00 / ${fmt(audio.duration)}`;
+});
+
+seekBar.addEventListener("input", () => {
+    if (!isNaN(audio.duration))
+        audio.currentTime = (seekBar.value / 100) * audio.duration;
+});
+
+document.getElementById("fileInput").addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+    document.getElementById("fileLabel").textContent = file.name;
+    audio.src = URL.createObjectURL(file);
+    audio.load();
+    audio.addEventListener("canplaythrough", function() {
+        audio.currentTime = timestamps[0];
+    }, { once: true });
+});
+
+document.getElementById("prevBtn").onclick = function () {
+    if (current > 1) seekToLine(current - 1);
+};
+document.getElementById("nextBtn").onclick = function () {
+    if (current < total) seekToLine(current + 1);
+};
+document.getElementById("playBtn").onclick = function () {
+    if (audio.paused) {
+    audio.play();
+    this.textContent = "⏸ Pause";
+} else {
+    audio.pause();
+    this.textContent = "▶ Play";
+}
+    if (audio.paused) {
+        audio.play();
+        this.textContent = "⏸ Pause";
+    } else {
+        audio.pause();
+        this.textContent = "▶ Play";
+    }
+};
+audio.addEventListener("ended", () => {
+    document.getElementById("playBtn").textContent = "▶ Play";
+});
+
+highlight(1);
+</script>
+</body>
+</html>
