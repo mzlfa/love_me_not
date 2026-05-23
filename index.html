@@ -10,82 +10,131 @@
             margin: 0;
             padding: 20px;
         }
-        .editor { background: #1e1e2e; }
-        .titlebar {
-            background: #181825;
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red    { background: #f38ba8; }
-        .yellow { background: #f9e2af; }
-        .green  { background: #a6e3a1; }
-        .titlebar span {
-            color: #cdd6f4;
-            font-family: 'Consolas', monospace;
-            font-size: 13px;
-        }
-        .line { display: flex; gap: 16px; padding: 4px 12px; }
-        .line-number { color: #45475a; font-family: 'Consolas', monospace; font-size: 13px; }
-        .lyric { color: #ff00aa; font-family: 'Consolas', monospace; font-size: 13px; }
-        .active { background: #2a2a3e; border-left: 3px solid #ff00aa; }
-        .active .lyric { color: #ff69b4; font-size: 15px; }
-        .audio-bar {
-            background: #181825;
-            padding: 10px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            border-top: 1px solid #313244;
-        }
-        .audio-row { display: flex; align-items: center; gap: 10px; }
-        .upload-label {
-            padding: 6px 14px;
-            border-radius: 6px;
-            border: 1px solid #313244;
-            background: #1e1e2e;
-            color: #cdd6f4;
-            font-family: 'Consolas', monospace;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .upload-label:hover { background: #313244; }
-        #fileInput { display: none; }
-        #fileLabel {
-            color: #6c7086;
-            font-family: 'Consolas', monospace;
-            font-size: 12px;
-            flex: 1;
-        }
-        .seek-row { display: flex; align-items: center; gap: 8px; }
-        #seekBar { flex: 1; height: 4px; accent-color: #ff00aa; cursor: pointer; }
-        #timeDisplay {
-            color: #6c7086;
-            font-family: 'Consolas', monospace;
-            font-size: 11px;
-            min-width: 80px;
-            text-align: right;
-        }
-        .controls { display: flex; gap: 10px; padding: 12px 16px; background: #181825; }
-        button {
-            padding: 8px 18px;
-            border-radius: 6px;
-            border: 1px solid #313244;
-            background: #1e1e2e;
-            color: #cdd6f4;
-            font-family: 'Consolas', monospace;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        button:hover { background: #313244; }
-        #line-9, #line-10, #line-11, #line-12, #line-13,
-#line-14, #line-15, #line-16, #line-17, #line-18,
-#line-19, #line-20, #line-21 {
-    background: transparent !important;
-    border-left: none !important;
-}
+        <style>
+    body {
+        background: #0d0a1a;
+        margin: 0;
+        padding: 20px;
+    }
+    .editor {
+        background: #1e1e2e;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 0 40px rgba(255, 0, 170, 0.3),
+                    0 0 80px rgba(255, 0, 170, 0.1);
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+    .titlebar {
+        background: #181825;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid #ff00aa33;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .red    { background: #f38ba8; }
+    .yellow { background: #f9e2af; }
+    .green  { background: #a6e3a1; }
+    .titlebar span {
+        color: #cdd6f4;
+        font-family: 'Consolas', monospace;
+        font-size: 13px;
+    }
+    .code-area {
+        max-height: 400px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #ff00aa #1e1e2e;
+    }
+    .line {
+        display: flex;
+        gap: 16px;
+        padding: 4px 12px;
+        transition: all 0.3s ease;
+    }
+    .line-number { color: #45475a; font-family: 'Consolas', monospace; font-size: 13px; }
+    .lyric {
+        color: #ff00aa;
+        font-family: 'Consolas', monospace;
+        font-size: 13px;
+        transition: all 0.3s ease;
+    }
+    .active { background: #2a2a3e; border-left: 3px solid #ff00aa; }
+    .active .lyric {
+        color: #ff69b4;
+        font-size: 15px;
+        text-shadow: 0 0 8px #ff00aa, 0 0 20px #ff00aa;
+    }
+    .audio-bar {
+        background: #181825;
+        padding: 10px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        border-top: 1px solid #313244;
+    }
+    .audio-row { display: flex; align-items: center; gap: 10px; }
+    .upload-label {
+        padding: 6px 14px;
+        border-radius: 6px;
+        border: 1px solid #313244;
+        background: #1e1e2e;
+        color: #cdd6f4;
+        font-family: 'Consolas', monospace;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    .upload-label:hover { background: #313244; }
+    #fileInput { display: none; }
+    #fileLabel {
+        color: #6c7086;
+        font-family: 'Consolas', monospace;
+        font-size: 12px;
+        flex: 1;
+    }
+    .seek-row { display: flex; align-items: center; gap: 8px; }
+    #seekBar { flex: 1; height: 4px; accent-color: #ff00aa; cursor: pointer; }
+    #timeDisplay {
+        color: #6c7086;
+        font-family: 'Consolas', monospace;
+        font-size: 11px;
+        min-width: 80px;
+        text-align: right;
+    }
+    .controls { display: flex; gap: 10px; padding: 12px 16px; background: #181825; }
+    button {
+        padding: 8px 18px;
+        border-radius: 6px;
+        border: 1px solid #313244;
+        background: #1e1e2e;
+        color: #cdd6f4;
+        font-family: 'Consolas', monospace;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    button:hover { background: #313244; }
+    #line-9, #line-10, #line-11, #line-12, #line-13,
+    #line-14, #line-15, #line-16, #line-17, #line-18,
+    #line-19, #line-20, #line-21 {
+        background: transparent !important;
+        border-left: none !important;
+    }
+    .statusbar {
+        background: #ff00aa;
+        padding: 4px 16px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .statusbar span {
+        font-family: 'Consolas', monospace;
+        font-size: 11px;
+        color: #1e1e2e;
+        font-weight: 600;
+    }
+</style>
     </style>
 </head>
 <body>
