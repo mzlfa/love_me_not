@@ -225,6 +225,7 @@ audio.addEventListener("timeupdate", () => {
 
 audio.addEventListener("loadedmetadata", () => {
     timeDisplay.textContent = `0:00 / ${fmt(audio.duration)}`;
+    audio.currentTime = timestamps[0];
 });
 
 seekBar.addEventListener("input", () => {
